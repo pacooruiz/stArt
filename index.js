@@ -23,7 +23,9 @@ app.get('/show', (req, res) => {
 
         if(!error){
             res.json(results)
-            res.status(200).end()
+        }
+        else{
+            res.status(500).end()
         }
         
     })
@@ -33,16 +35,15 @@ app.get('/show', (req, res) => {
 //GET show by id
 app.get('/show/:id', (req, res) => {
 
-    const query = "SELECT users.name, users.username, description FROM shows, users WHERE users.id = shows.user AND shows.id = '" + req.params.id + "'"
+    const query = "SELECT users.name, users.username, description, time, likes FROM shows, users WHERE users.id = shows.user AND shows.id = ?"
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, [req.params.id], (error, results, fields) => {
 
         if(!error){
             res.json(results)
-            res.status(200).end()
         }
         else{
-            console.log(error)
+            res.status(500).end()
         }
         
     })
@@ -52,33 +53,74 @@ app.get('/show/:id', (req, res) => {
 //ADD show
 app.post('/show', (req, res) => {
 
-    const { lat, lng, user, description } = req.body
-    const query = "INSERT INTO shows (lat, lng, user, description) VALUES (" + lat + ", " + lng + ", " + user + ", '" + description + "');"
+    const { lat, lng, user, description, time } = req.body
+    const query = "INSERT INTO shows (lat, lng, user, description, time) VALUES (?, ?, ?, ?, ?);"
 
-    console.log(query)
-
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, [lat, lng, user, description, time], (error, results, fields) => {
 
         if(!error){
-            res.status(200).end()
+
+            var result = true
+            res.json({result})
         }
         else{
-            console.log(error)
+            var result = false
+            res.json({result})
         }
         
     })
 
 })
 
+//ADD like
+app.post('/like/:id', (req, res) => {
+
+    connection.query("SELECT likes FROM shows WHERE id = ?", [req.params.id], (error, results, fields) => {
+
+        if(!error){
+
+            var newLikes = results[0].likes + 1
+
+            connection.query("UPDATE shows SET likes = ? WHERE id = ?", [newLikes, req.params.id], (error, results, fields) => {
+
+                if(!error){
+    
+                    var result = true
+                    res.json({result})
+                }
+                else{
+                    var result = false
+                    res.json({result})
+                }
+                
+            })
+
+        }
+        else{
+            var result = false
+            res.json({result})
+        }
+    
+    })
+
+})
+
+
 //DEL show
 app.delete('/show/:id', (req, res) => {
 
-    const query = "DELETE FROM shows WHERE id = " + req.params.id
+    const query = "DELETE FROM shows WHERE id = ?"
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, [req.params.id], (error, results, fields) => {
 
         if(!error){
-            res.status(200).end()
+
+            var result = true
+            res.json({result})
+        }
+        else{
+            var result = false
+            res.json({result})
         }
         
     })
@@ -97,10 +139,15 @@ app.delete('/shows', (req, res) => {
                 if(!error){
                     res.status(200).end()
                 }
+                else{
+                    res.status(500).end()
+                }
 
             })
-
             
+        }
+        else{
+            res.status(500).end()
         }
         
     })
@@ -111,12 +158,18 @@ app.delete('/shows', (req, res) => {
 app.post('/user', (req, res) => {
 
     const { username, name, password } = req.body
-    const query = "INSERT INTO users (username, name, password) VALUES ('" + username + "', '" + name + "', '" + password + "');"
+    const query = "INSERT INTO users (username, name, password) VALUES (?, ?, ?);"
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, [username, name, password], (error, results, fields) => {
 
         if(!error){
-            res.status(200).end()
+
+            const user = results.insertId
+            res.json({user})
+
+        }
+        else{
+            res.status(500).end()
         }
         
     })
@@ -127,26 +180,30 @@ app.post('/user', (req, res) => {
 app.post('/login', (req, res) => {
 
     const { username, password } = req.body
-    const query = "SELECT password FROM users WHERE username = '" + username + "'";
+    const query = "SELECT id, password FROM users WHERE username = ?";
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, [username], (error, results, fields) => {
 
         if(!error){
 
             if(results[0].password == password){
 
-                res.status(200).end()
+                const id = results[0].id
+                res.json({id})
             }
             else{
-                res.status(401).end()
+                const result = false
+                res.json({result})
             }
 
         }
         else{
-            console.log(error)
+            
+            res.status(500).end()
         }
         
     })
+
 
 })
 
