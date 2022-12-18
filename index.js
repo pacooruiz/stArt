@@ -60,12 +60,12 @@ app.post('/show', (req, res) => {
 
         if(!error){
 
-            var result = true
-            res.json({result})
+            var show = results.insertId
+            res.json({show})
         }
         else{
-            var result = false
-            res.json({result})
+            var show = 0
+            res.json({show})
         }
         
     })
