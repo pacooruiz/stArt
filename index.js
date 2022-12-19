@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 
 var mysql = require('mysql');
@@ -54,6 +55,11 @@ app.get('/show/:id', (req, res) => {
 app.post('/show', (req, res) => {
 
     const { lat, lng, user, description, time } = req.body
+
+    if(lat==null || lng==null || user==null || description==null || time==null){
+        res.status(400).end()
+    }
+
     const query = "INSERT INTO shows (lat, lng, user, description, time) VALUES (?, ?, ?, ?, ?);"
 
     connection.query(query, [lat, lng, user, description, time], (error, results, fields) => {
@@ -79,26 +85,31 @@ app.post('/like/:id', (req, res) => {
 
         if(!error){
 
-            var newLikes = results[0].likes + 1
+            if(!results.length > 0){
 
-            connection.query("UPDATE shows SET likes = ? WHERE id = ?", [newLikes, req.params.id], (error, results, fields) => {
+                res.status(400).end()
+            }
+            else{
+                var newLikes = results[0].likes + 1
 
-                if(!error){
-    
-                    var result = true
-                    res.json({result})
-                }
-                else{
-                    var result = false
-                    res.json({result})
-                }
-                
-            })
+                connection.query("UPDATE shows SET likes = ? WHERE id = ?", [newLikes, req.params.id], (error, results, fields) => {
+
+                    if(!error){
+        
+                        var result = true
+                        res.json({result})
+                    }
+                    else{
+                        var result = false
+                        res.json({result})
+                    }
+                    
+                })
+            }
 
         }
         else{
-            var result = false
-            res.json({result})
+            res.status(500).end()
         }
     
     })
@@ -157,53 +168,88 @@ app.delete('/shows', (req, res) => {
 //ADD user
 app.post('/user', (req, res) => {
 
-    const { username, name, password } = req.body
-    const query = "INSERT INTO users (username, name, password) VALUES (?, ?, ?);"
+    var { username, name, password } = req.body
 
-    connection.query(query, [username, name, password], (error, results, fields) => {
+    if(username==null || name==null || password==null){
+        res.status(400).end()
+    }
+    else{
 
-        if(!error){
+        username = username.trim()
+        name = name.trim()
+        password = password.trim()
 
-            const user = results.insertId
-            res.json({user})
-
+        if(username.length > 50 || name.length > 50 || password.length >50 || username==="" || name==="" || password==""){
+            res.status(400).end()
         }
         else{
-            res.status(500).end()
+
+            const query = "INSERT INTO users (username, name, password) VALUES (?, ?, ?);"
+
+            connection.query(query, [username, name, password], (error, results, fields) => {
+
+                if(!error){
+
+                    const user = results.insertId
+                    res.json({user})
+
+                }
+                else{
+                    res.status(500).end()
+                }
+                
+            })
         }
-        
-    })
+
+    }
 
 })
 
 //Login
 app.post('/login', (req, res) => {
 
-    const { username, password } = req.body
-    const query = "SELECT id, password FROM users WHERE username = ?";
+    var { username, password } = req.body
 
-    connection.query(query, [username], (error, results, fields) => {
+    if(username==null || password==null){
+        res.status(400).end()
+    }
+    else{
 
-        if(!error){
+        username = username.trim()
+        password = password.trim()
 
-            if(results[0].password == password){
-
-                const id = results[0].id
-                res.json({id})
-            }
-            else{
-                const result = false
-                res.json({result})
-            }
-
+        if(username==="" || password===""){
+            res.status(400).end()
         }
         else{
-            
-            res.status(500).end()
-        }
-        
-    })
 
+            const query = "SELECT id, password FROM users WHERE username = ?";
+
+            connection.query(query, [username], (error, results, fields) => {
+
+                if(!error){
+
+                    if(results[0].password == password){
+
+                        const id = results[0].id
+                        res.json({id})
+                    }
+                    else{
+                        const result = false
+                        res.json({result})
+                    }
+
+                }
+                else{
+                    
+                    res.status(500).end()
+                }
+                
+            })
+
+        }
+
+    }
 
 })
 
