@@ -1,0 +1,1268 @@
+{
+	"info": {
+		"_postman_id": "56034b3e-309d-41f3-8c6c-cf3eaea97cd0",
+		"name": "stArt PRO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Correct",
+					"item": [
+						{
+							"name": "Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"var Ajv = require('ajv'),",
+											"    avj = new Ajv({logger: console}),",
+											"    schema = {",
+											"",
+											"        \"required\" : [",
+											"            \"user\"",
+											"        ],",
+											"",
+											"        \"properties\" : {",
+											"            \"user\" : {",
+											"                \"type\" : \"integer\"",
+											"            }",
+											"        }",
+											"            ",
+											"    }",
+											"",
+											"pm.test(\"Schema is valid\", function() {",
+											"    var data = pm.response.json()",
+											"    pm.expect(avj.validate(schema, data)).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"var Ajv = require('ajv'),",
+											"    avj = new Ajv({logger: console}),",
+											"    schema = {",
+											"",
+											"        \"required\" : [",
+											"            \"id\"",
+											"        ],",
+											"",
+											"        \"properties\" : {",
+											"            \"id\" : {",
+											"                \"type\" : \"integer\"",
+											"            }",
+											"        }",
+											"            ",
+											"    }",
+											"",
+											"pm.test(\"Schema is valid\", function() {",
+											"    var data = pm.response.json()",
+											"    pm.expect(avj.validate(schema, data)).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/login",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Incorrect",
+					"item": [
+						{
+							"name": "Register Bad Request - Empty username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"  \",\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - Empty name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"  \",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - Empty password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"  \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - username > 50",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"5e1ayAM0cK7RQ7bhfZRAAzs2CwiCUK5PwQaUdsisXVDsUYFEz7w\",\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - name > 50",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"5e1ayAM0cK7RQ7bhfZRAAzs2CwiCUK5PwQaUdsisXVDsUYFEz7w\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - password > 50",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"5e1ayAM0cK7RQ7bhfZRAAzs2CwiCUK5PwQaUdsisXVDsUYFEz7w\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - Null name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - Null username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"Usuario de prueba\",\n    \"password\":\"  \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register Bad Request - Null password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"name\":\"Usuario de prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/user",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Bad Request - Empty username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"  \",\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/login",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Bad Request - Empty password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\",\n    \"password\":\"  \"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/login",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Bad Request - Null username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/login",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login Bad Request - Null password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\":\"prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/login",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Shows",
+			"item": [
+				{
+					"name": "Correct",
+					"item": [
+						{
+							"name": "Get all shows",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"var Ajv = require('ajv'),",
+											"    avj = new Ajv({logger: console}),",
+											"    schema = {",
+											"        \"type\": \"array\",",
+											"",
+											"        \"items\" : [{",
+											"            \"required\" : [",
+											"            \"id\",",
+											"            \"lat\",",
+											"            \"lng\"",
+											"            ],",
+											"",
+											"            \"properties\" : {",
+											"                \"id\" : {",
+											"                    \"type\" : \"integer\"",
+											"                },",
+											"                \"username\" : {",
+											"                    \"lat\" : \"float\"",
+											"                },",
+											"                \"description\" : {",
+											"                    \"lng\" : \"float\"",
+											"                }",
+											"            }",
+											"            ",
+											"        }]",
+											"",
+											"    }",
+											"",
+											"pm.test(\"Schema is valid\", function() {",
+											"    var data = pm.response.json()",
+											"    pm.expect(avj.validate(schema, data)).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get show by id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"var Ajv = require('ajv'),",
+											"    avj = new Ajv({logger: console}),",
+											"    schema = {",
+											"        \"type\": \"array\",",
+											"",
+											"        \"items\" : [{",
+											"            \"required\" : [",
+											"                \"name\",",
+											"                \"username\",",
+											"                \"description\",",
+											"                \"time\",",
+											"                \"likes\"",
+											"            ],",
+											"",
+											"            \"properties\" : {",
+											"                \"name\" : {",
+											"                    \"type\" : \"string\"",
+											"                },",
+											"                \"username\" : {",
+											"                    \"type\" : \"string\"",
+											"                },",
+											"                \"description\" : {",
+											"                    \"type\" : \"string\"",
+											"                },",
+											"                \"time\" : {",
+											"                    \"type\" : \"integer\"",
+											"                },",
+											"                \"likes\" : {",
+											"                    \"type\" : \"integer\"",
+											"                }",
+											"            }",
+											"            ",
+											"        }]",
+											"",
+											"    }",
+											"",
+											"pm.test(\"Schema is valid\", function() {",
+											"    var data = pm.response.json()",
+											"    pm.expect(avj.validate(schema, data)).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show/2",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"var Ajv = require('ajv'),",
+											"    avj = new Ajv({logger: console}),",
+											"    schema = {",
+											"",
+											"        \"required\" : [",
+											"            \"show\"",
+											"        ],",
+											"",
+											"        \"properties\" : {",
+											"            \"show\" : {",
+											"                \"type\" : \"integer\"",
+											"            }",
+											"        }",
+											"            ",
+											"    }",
+											"",
+											"pm.test(\"Schema is valid\", function() {",
+											"    var data = pm.response.json()",
+											"    pm.expect(avj.validate(schema, data)).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lat\":31.957,\n    \"lng\":211.687,\n    \"user\":1,\n    \"description\":\"Actuación de prueba\",\n    \"time\":1671205993\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add like",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Result is true\", function () {",
+											"    pm.response.to.have.body({\"result\": true})",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/like/1",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"like",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete show",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Result is true\", function () {",
+											"    pm.response.to.have.body({\"result\": true})",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show/1",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Incorrect",
+					"item": [
+						{
+							"name": "Add like Bad Request - Id no exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/like/prueba",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"like",
+										"prueba"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show Bad Request - Null lat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lng\":211.687,\n    \"user\":1,\n    \"description\":\"Actuación de prueba\",\n    \"time\":1671205993\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show Bad Request - Null lng",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lat\":31.957,\n    \"user\":1,\n    \"description\":\"Actuación de prueba\",\n    \"time\":1671205993\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show Bad Request - Null user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lat\":31.957,\n    \"lng\":211.687,\n    \"description\":\"Actuación de prueba\",\n    \"time\":1671205993\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show Bad Request - Null description",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lat\":31.957,\n    \"lng\":211.687,\n    \"user\":1,\n    \"time\":1671205993\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add show Bad Request - Null time",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function() {",
+											"    pm.response.to.have.status(400)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lat\":31.957,\n    \"lng\":211.687,\n    \"user\":1,\n    \"description\":\"Actuación de prueba\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://start-e8zv.onrender.com/show",
+									"protocol": "https",
+									"host": [
+										"start-e8zv",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"show"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Delete all shows",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://start-e8zv.onrender.com/shows",
+					"protocol": "https",
+					"host": [
+						"start-e8zv",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"shows"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
