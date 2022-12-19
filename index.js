@@ -54,27 +54,38 @@ app.get('/show/:id', (req, res) => {
 //ADD show
 app.post('/show', (req, res) => {
 
-    const { lat, lng, user, description, time } = req.body
+    var { lat, lng, user, description, time } = req.body
 
     if(lat==null || lng==null || user==null || description==null || time==null){
         res.status(400).end()
     }
+    else{
 
-    const query = "INSERT INTO shows (lat, lng, user, description, time) VALUES (?, ?, ?, ?, ?);"
+        description = description.trim()
 
-    connection.query(query, [lat, lng, user, description, time], (error, results, fields) => {
-
-        if(!error){
-
-            var show = results.insertId
-            res.json({show})
+        if(description.length > 100 || description===""){
+            res.status(400).end()
         }
         else{
-            var show = 0
-            res.json({show})
+
+            const query = "INSERT INTO shows (lat, lng, user, description, time) VALUES (?, ?, ?, ?, ?);"
+
+            connection.query(query, [lat, lng, user, description, time], (error, results, fields) => {
+
+                if(!error){
+
+                    var show = results.insertId
+                    res.json({show})
+                }
+                else{
+                    var show = 0
+                    res.json({show})
+                }
+                
+            })
         }
-        
-    })
+
+    }
 
 })
 
