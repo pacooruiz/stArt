@@ -1,0 +1,19 @@
+
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE shows (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    lat DECIMAL(15, 10) NOT NULL,
+    lng DECIMAL(15, 10) NOT NULL, 
+    user INT(11) NOT NULL,
+    likes INT(11) DEFAULT 0,
+    time INT(11),
+    description VARCHAR(100),
+    PRIMARY KEY (id)
+);
